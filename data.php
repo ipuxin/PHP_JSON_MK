@@ -1,10 +1,8 @@
 <?php
-
 //1
 $member['username'] = "mukewang";
 $member['password'] = "mukewang";
 $do = $_REQUEST['do'];
-
 
 //2
 $members['1']['username'] = "幕课网";
