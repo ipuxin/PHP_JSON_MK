@@ -6,46 +6,55 @@ and open the template in the editor.
 -->
 <html>
 <head>
-    <title>初始化网站基本信息</title>
+    <title>第二个实战</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            var url = "data.php";
+            var data = {"do": "first"};
+
+            /**
+             * 一维数据转换
+             */
+            $.getJSON(url, data, function (res) {
+                $("#username").val(res.username);
+                $("#password").val(res.password);
+            });
+
+            /**
+             * 多为数组转换,前端类似数组的方式使用
+             * res[1].username
+             * @type {{do: string}}
+             */
+            var data = {"do": "second"};
+            $.getJSON(url, data, function (res) {
+                console.info(res);
+                $("#members").val(res.third.members.username);
+            });
+
+            /**
+             * 对象操作
+             * @type {{do: string}}
+             */
+            var data = {"do": "third"};
+            $.getJSON(url, data, function (res) {
+
+                $("#address").val(res.address[1].username);
+            });
+        });
+    </script>
 </head>
 <body>
-<script type="text/javascript">
-    $("document").ready(function () {
-        var url = "server.php";
-        var data = {'inAjax': 1, 'do': 'checkMember', 'username': 'demo'};
+<h2>一维数组巩固练习</h2>
+<input type="text" name="username" id="username"/><br/>
+<input type="password" name="password" id="password"/>
 
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: data,
-            dataType: 'json',
-            success: function (res) {
+<h2>多维数组实战(展示一组会员信息)</h2>
+<textarea id="members"></textarea>
 
-                //把json字符串转换为js对象,用来调用数据,
-                // 如果前后端都约定为json格式,则无需转化,直接调用
-//                var jsonObj = JSON.parse(res);
-
-                $("#username").val(res.username);
-                $("#groupname").val(res.groupname);
-                $("#uid").val(res.uid);
-
-            },
-            error: function () {
-                alert('请求异常');
-            }
-        });
-    });
-</script>
-
-<div>
-    用户名：<input type="text" name="username" id="username"/>
-    <br/>
-    会员组:<input type="text" name="groupname" id="groupname"/>
-    <br/>
-    UID:<input type="text" name="uid" id="uid"/>
-</div>
+<h2>对象实战(放一组地址信息)</h2>
+<textarea id="address"></textarea>
 </body>
 </html>
