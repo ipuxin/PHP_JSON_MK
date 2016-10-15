@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+    <title>初始化网站基本信息</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $("document").ready(function () {
+        var url = "server.php";
+        var data = {'inAjax': 1, 'do': 'checkMember', 'username': 'demo'};
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            success: function (res) {
+
+                //把json字符串转换为js对象,用来调用数据,
+                // 如果前后端都约定为json格式,则无需转化,直接调用
+//                var jsonObj = JSON.parse(res);
+
+                $("#username").val(res.username);
+                $("#groupname").val(res.groupname);
+                $("#uid").val(res.uid);
+
+            },
+            error: function () {
+                alert('请求异常');
+            }
+        });
+    });
+</script>
+
+<div>
+    用户名：<input type="text" name="username" id="username"/>
+    <br/>
+    会员组:<input type="text" name="groupname" id="groupname"/>
+    <br/>
+    UID:<input type="text" name="uid" id="uid"/>
+</div>
+</body>
+</html>
